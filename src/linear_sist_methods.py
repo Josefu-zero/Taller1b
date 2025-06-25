@@ -70,7 +70,7 @@ def eliminacion_gaussiana(A: np.ndarray) -> np.ndarray:
         if p != i:
             # swap rows
             logging.debug(f"Intercambiando filas {i} y {p}")
-            logging.info(f"Intercambiando filas {i} y {p}")
+            #logging.info(f"Intercambiando filas {i} y {p}")
             _aux = A[i, :].copy()
             A[i, :] = A[p, :].copy()
             A[p, :] = _aux
@@ -80,7 +80,7 @@ def eliminacion_gaussiana(A: np.ndarray) -> np.ndarray:
             m = A[j, i] / A[i, i]
             A[j, i:] = A[j, i:] - m * A[i, i:]
 
-        logging.info(f"\n{A}")
+        #logging.info(f"\n{A}")
 
     if A[n - 1, n - 1] == 0:
         raise ValueError("No existe solución única.")
@@ -138,7 +138,7 @@ def descomposicion_LU(A: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
             L[j, i] = m
 
-        logging.info(f"\n{A}")
+        #logging.info(f"\n{A}")
 
     if A[n - 1, n - 1] == 0:
         raise ValueError("No existe solución única.")
@@ -167,7 +167,7 @@ def resolver_LU(L: np.ndarray, U: np.ndarray, b: np.ndarray) -> np.ndarray:
     n = L.shape[0]
 
     # --- Sustitución hacia adelante
-    logging.info("Sustitución hacia adelante")
+    #logging.info("Sustitución hacia adelante")
 
     y = np.zeros((n, 1), dtype=float)
 
@@ -179,22 +179,22 @@ def resolver_LU(L: np.ndarray, U: np.ndarray, b: np.ndarray) -> np.ndarray:
             suma += L[i, j] * y[j]
         y[i] = (b[i] - suma) / L[i, i]
 
-    logging.info(f"y = \n{y}")
+    #logging.info(f"y = \n{y}")
 
     # --- Sustitución hacia atrás
-    logging.info("Sustitución hacia atrás")
+    #logging.info("Sustitución hacia atrás")
     sol = np.zeros((n, 1), dtype=float)
 
     sol[-1] = y[-1] / U[-1, -1]
 
     for i in range(n - 2, -1, -1):
-        logging.info(f"i = {i}")
+        #logging.info(f"i = {i}")
         suma = 0
         for j in range(i + 1, n):
             suma += U[i, j] * sol[j]
-        logging.info(f"suma = {suma}")
-        logging.info(f"U[i, i] = {U[i, i]}")
-        logging.info(f"y[i] = {y[i]}")
+        #logging.info(f"suma = {suma}")
+        #logging.info(f"U[i, i] = {U[i, i]}")
+        #logging.info(f"y[i] = {y[i]}")
         sol[i] = (y[i] - suma) / U[i, i]
 
     logging.debug(f"x = \n{sol}")
@@ -256,8 +256,6 @@ def gauss_jordan(Ab: np.ndarray) -> np.ndarray:
     ``solucion``: vector con la solución del sistema de ecuaciones lineales.
 
     """
-    mul=0
-    div=0
     if not isinstance(Ab, np.ndarray):
         logging.debug("Convirtiendo A a numpy array.")
         Ab = np.array(Ab)
@@ -298,13 +296,13 @@ def gauss_jordan(Ab: np.ndarray) -> np.ndarray:
             if i == j:
                 continue
             m = Ab[j, i] / Ab[i, i]
-            div=div+1
+           
             Ab[j, i:] = Ab[j, i:] - m * Ab[i, i:]
-            mul=mul+1
+           
 
 
-        logging.info(f"\n{Ab}")
-        print(mul,div)
+        #logging.info(f"\n{Ab}")
+    
 
     if Ab[n - 1, n - 1] == 0:
         raise ValueError("No existe solución única.")
